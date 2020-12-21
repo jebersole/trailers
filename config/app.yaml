@@ -1,0 +1,9 @@
+slim:
+  debug: true
+
+templates:
+  dir: template
+  cache: var/cache/template
+
+twig:
+  cache: false

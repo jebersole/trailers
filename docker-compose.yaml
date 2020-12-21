@@ -1,0 +1,46 @@
+version: '3.7'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  app:
+#    build:
+#      dockerfile: docker/php-dev.Dockerfile
+#      context: .
+    image: 'bitnami/php-fpm:latest'
+    volumes:
+      - .:/var/www/app
+    environment:
+      COMPOSER_MEMORY_LIMIT: -1
+      COMPOSER_ALLOW_SUPERUSER: 1
+      APP_ENV: 'dev'
+    networks:
+      - app-tier
+    working_dir: /var/www/app
+
+  mysql:
+#    image: mysql:5.7
+    image: 'bitnami/mysql:latest'
+    networks:
+      - app-tier
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: slim_project
+      MYSQL_USER: webmaster
+      MYSQL_PASSWORD: webmaster
+    ports:
+      - '3306:3306'
+
+  nginx:
+    image: 'bitnami/nginx:latest'
+    networks:
+      - app-tier
+    depends_on:
+      - app
+    ports:
+      - '80:80'
+    volumes:
+      - ./server_block.conf:/opt/bitnami/nginx/conf/server_blocks/myapp.conf
+      - .:/var/www/app

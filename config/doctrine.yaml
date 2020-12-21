@@ -1,0 +1,11 @@
+connection:
+  charset: utf8mb4
+  driver: pdo_mysql
+  host: mysql
+  port: 3306
+  dbname: slim_project
+  user: webmaster
+  password: webmaster
+
+mapping:
+  - Entity
