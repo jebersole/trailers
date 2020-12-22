@@ -14,7 +14,7 @@
     "php": ">=7.4",
     "ext-json": "*",
     "ext-simplexml": "*",
-    "doctrine/orm": "^3.0",
+    "doctrine/orm": "^2.7",
     "monolog/monolog": "^1.25",
     "php-http/client-common": "^2.1",
     "php-http/guzzle6-adapter": "^2.0",

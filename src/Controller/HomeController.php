@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorInterface;
 use Twig\Environment;
 
@@ -65,6 +66,35 @@ class HomeController
             ]);
         } catch (\Exception $e) {
             throw new HttpBadRequestException($request, $e->getMessage(), $e);
+        }
+
+        $response->getBody()->write($data);
+
+        return $response;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface      $response
+     *
+     * @return ResponseInterface
+     *
+     * @throws HttpBadRequestException|HttpNotFoundException
+     */
+    public function show(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $id = (int) $request->getAttribute('id');
+        if ($id) {
+            try {
+                $data = $this->twig->render('home/show.html.twig', [
+                    'trailer' =>  $this->em->getRepository(Movie::class)
+                                      ->find($id),
+                ]);
+            } catch (\Exception $e) {
+                throw new HttpBadRequestException($request, $e->getMessage(), $e);
+            }
+        } else {
+            throw new HttpNotFoundException($request);
         }
 
         $response->getBody()->write($data);

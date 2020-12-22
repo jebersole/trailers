@@ -43,6 +43,5 @@ foreach ($providers as $providerClassName) {
     }
     $provider->register($container);
 }
-//$twig = new \Twig\Environment($loader);
-//$twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone('Europe/Paris');
+
 return $container;

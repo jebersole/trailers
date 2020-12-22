@@ -49,11 +49,19 @@ final class Movie
     private $pubDate;
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getImage(): ?string
     {
         return \App\Command\FetchDataCommand::TRAILER_ROOT . $this->getLink() . '/images/poster.jpg';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceUrl(): ?string
+    {
+        return \App\Command\FetchDataCommand::TRAILER_ROOT . $this->getLink();
     }
 
     /**
