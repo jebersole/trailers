@@ -8,7 +8,9 @@
         <table class="table table-bordered">
             {% for trailer in trailers %}
                 <tr>
-                    <td>{{ trailer.title }}</td>
+                    <td>{{ trailer.title }}<br>
+                        <img src="{{ trailer.getImage() }}" width="65" height="97" border="0">
+                    </td>
                 </tr>
             {% endfor %}
         </table>

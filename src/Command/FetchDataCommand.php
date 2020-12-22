@@ -25,7 +25,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class FetchDataCommand extends Command
 {
-    private const SOURCE = 'https://trailers.apple.com/trailers/home/rss/newtrailers.rss';
+    public const TRAILER_ROOT = 'https://trailers.apple.com/trailers/';
+
+    private const SOURCE = self::TRAILER_ROOT . 'home/rss/newtrailers.rss';
 
     /**
      * @var string
@@ -126,12 +128,15 @@ class FetchDataCommand extends Command
         if (!property_exists($xml, 'channel')) {
             throw new RuntimeException('Could not find \'channel\' element in feed');
         }
-        foreach ($xml->channel->item as $item) {
+        for ($i = 0; $i < 10; $i++) {
+            $item = $xml->channel->item[$i];
+            $link = substr((string) $item->link, strpos((string) $item->link, '/trailers/') + 10);
             $trailer = $this->getMovie((string) $item->title)
                 ->setTitle((string) $item->title)
                 ->setDescription((string) $item->description)
                 ->setLink((string) $item->link)
                 ->setPubDate($this->parseDate((string) $item->pubDate))
+                ->setLink((string) $link)
             ;
 
             $this->doctrine->persist($trailer);

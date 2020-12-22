@@ -49,29 +49,11 @@ final class Movie
     private $pubDate;
 
     /**
-     * @var string|null
-     * @ORM\Column(nullable=true)
-     */
-    private $image;
-
-    /**
      * @return string|null
      */
     public function getImage(): ?string
     {
-        return $this->image;
-    }
-
-    /**
-     * @param string|null $image
-     *
-     * @return Movie
-     */
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
+        return \App\Command\FetchDataCommand::TRAILER_ROOT . $this->getLink() . '/images/poster.jpg';
     }
 
     /**
