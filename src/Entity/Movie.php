@@ -25,6 +25,12 @@ final class Movie
     private $id;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $likes = 0;
+
+    /**
      * @var string|null
      * @ORM\Column()
      */
@@ -70,6 +76,26 @@ final class Movie
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @param string|null $title
+     *
+     * @return Movie
+     */
+    public function addLike(): self
+    {
+        $this->likes++;
+
+        return $this;
     }
 
     /**

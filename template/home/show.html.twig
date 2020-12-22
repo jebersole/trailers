@@ -8,7 +8,7 @@
         <table class="table table-bordered">
             <tr>
                 <td>{{ trailer.getTitle() }}<br>
-                    <img src="{{ trailer.getImage() }}" width="65" height="97" border="0">
+                    {% include 'image_like.html.twig' %}
                     <div>{{ trailer.getDescription() }}</div>
                     <a href="{{ trailer.getSourceUrl() }}">View on iTunes</a><br>
                 </td>

@@ -1,0 +1,10 @@
+.like {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.like-row .like {
+    margin-left: 15px;
+    margin-right: 5px;
+}

@@ -9,7 +9,7 @@
             {% for trailer in trailers %}
                 <tr>
                     <td><a href="/trailer/{{ trailer.getId() }}">{{ trailer.getTitle() }}</a><br>
-                        <img src="{{ trailer.getImage() }}" width="65" height="97" border="0">
+                        {% include 'image_like.html.twig' %}
                     </td>
                 </tr>
             {% endfor %}

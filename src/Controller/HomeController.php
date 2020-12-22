@@ -103,6 +103,39 @@ class HomeController
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface      $response
+     *
+     * @return ResponseInterface
+     *
+     * @throws HttpBadRequestException|HttpNotFoundException
+     */
+    public function like(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $postArr  = $request->getParsedBody();
+        $id = (int) $postArr['id'] ?? 0;
+        if ($id) {
+            try {
+                $trailer = $this->em->getRepository(Movie::class)->find($id);
+                if ($trailer) {
+                    $trailer->addLike();
+                    $this->em->persist($trailer);
+                    $this->em->flush();
+                    $data = ['count' => $trailer->getLikes()];
+                    $response->getBody()->write(json_encode(($data)));
+                    $response->withHeader('Content-Type', 'application/json');
+                }
+            } catch (\Exception $e) {
+                throw new HttpBadRequestException($request, $e->getMessage(), $e);
+            }
+        } else {
+            throw new HttpNotFoundException($request);
+        }
+
+        return $response;
+    }
+
+    /**
      * @return Collection
      */
     protected function fetchData(): Collection

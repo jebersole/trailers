@@ -9,3 +9,9 @@ trailer:
   path: trailer/{id}
   controller: App\Controller\HomeController
   action: show
+
+like:
+  method: 'post'
+  path: like
+  controller: App\Controller\HomeController
+  action: like
